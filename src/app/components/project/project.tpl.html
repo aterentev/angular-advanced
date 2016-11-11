@@ -1,0 +1,75 @@
+<div class="container project">
+  <h3>{{$ctrl.project.Name}}</h3>
+  <div class="project-info clearfix">
+    <div class="project-photo">
+      <!--<img src="{{$ctrl.project.ImageUrl}}">-->
+      <!--<button class="btn btn-primary dashboard">Dashboard</button>-->
+    </div>
+    <div class="project-info-card">
+      <div>
+        <span>Customer:</span>
+        <p ng-hide="$ctrl.infoEdited">{{$ctrl.project.CustomerName}}</p>
+        <p><input type="text" ng-model="$ctrl.project.CustomerName" ng-if="$ctrl.infoEdited" ng-blur="$ctrl.infoEdited = false"></p>
+      </div>
+      <div>
+        <span>Start date:</span>
+        <p ng-hide="$ctrl.infoEdited">{{$ctrl.project.StartDate | date: "longDate"}}</p>
+        <!--<input type="text" uib-datepicker-popup="dd-MMMM-yyyy" is-open="$ctrl.popup1.opened"-->
+               <!--ng-model="$ctrl.project.StartDate" ng-if="$ctrl.infoEdited" ng-blur="$ctrl.infoEdited = false" ng-focus="$ctrl.popup1.opened = true">-->
+        <p class="input-group input-group-sm">
+          <input type="text" class="form-control" uib-datepicker-popup="dd-MMMM-yyyy" ng-model="$ctrl.StartDate" is-open="$ctrl.popup1"
+                 ng-if="$ctrl.infoEdited" ng-focus="$ctrl.popup1 = true">
+          <span class="input-group-btn" ng-if="$ctrl.infoEdited">
+            <button type="button" class="btn btn-default" ng-click="$ctrl.popup1 = true"><i class="fa fa-calendar"></i></button>
+          </span>
+        </p>
+      </div>
+      <div>
+        <span>End date:</span>
+        <p ng-hide="$ctrl.infoEdited">{{$ctrl.project.EndDate | date: "longDate"}}</p>
+        <p class="input-group input-group-sm">
+          <input type="text" class="form-control" uib-datepicker-popup="dd-MMMM-yyyy" ng-model="$ctrl.EndDate" is-open="$ctrl.popup2"
+                 ng-if="$ctrl.infoEdited" ng-focus="$ctrl.popup2 = true">
+          <span class="input-group-btn" ng-if="$ctrl.infoEdited">
+            <button type="button" class="btn btn-default" ng-click="$ctrl.popup2 = true"><i class="fa fa-calendar"></i></button>
+          </span>
+        </p>
+      </div>
+      <div>
+        <span>Description:</span>
+        <p ng-hide="$ctrl.infoEdited">{{$ctrl.project.Description}}</p>
+        <p><textarea ng-model="$ctrl.project.Description" ng-if="$ctrl.infoEdited" ></textarea></p>
+      </div>
+      <a class="btn btn-primary" ui-sref="app.dashboard({ projectId: $ctrl.project.Id })">Dashboard</a>
+      <button class="btn btn-primary" ng-click="$ctrl.infoEdited = true">Edit</button>
+    </div>
+  </div>
+  <div class="project-team">
+    <h3>
+      Team
+      <button ng-hide="$ctrl.editSelect" class="btn btn-primary add-to-team" ng-click="$ctrl.addEmployee()">Add to team</button>
+      <input ng-if="$ctrl.editSelect" placeholder="select employee" type="text" ng-model="$ctrl.selected" typeahead-on-select="$ctrl.onSelect($item, $model, $label)"
+             class="typeahead" uib-typeahead="(employee.FullName + ', ' + employee.Position.Name) for employee in $ctrl.employees | filter:{FullName:$viewValue}"
+             autofocus>
+    </h3>
+    <div class="row header">
+      <div class="col-md-3 text-primary">Name</div>
+      <div class="col-md-2 text-primary">Position</div>
+      <div class="col-md-4 text-primary">Email</div>
+      <div class="col-md-2 text-primary">Skype</div>
+    </div>
+    <div class="row team-employee" ng-repeat="employee in $ctrl.team | orderBy: Position.Id">
+      <div class="col-md-3">
+        <a ui-sref="app.profile({ userId: employee.Id })">{{employee.FullName}}</a>
+      </div>
+      <div class="col-md-2">{{employee.Position.Name}}</div>
+      <div class="col-md-4">{{employee.Email}}</div>
+      <div class="col-md-2">{{employee.Skype}}</div>
+      <div class="col-md-1">
+        <a href="#" class="pull-left">
+          <i class="fa fa-times" ng-click="$ctrl.deleteEmployee(employee)"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

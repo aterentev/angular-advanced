@@ -1,0 +1,52 @@
+<div class="container">
+  <table class="table timesheets-table">
+    <thead>
+      <tr class="timesheets-table-header">
+        <th class="timesheets-table-name">Timesheets</th>
+        <th class="left-arrow">
+          <a ng-click="$ctrl.prevWeek()"><i class="fa fa-arrow-left"></i></a>
+        </th>
+        <th class="calendar-bar" ng-repeat="day in $ctrl.calendar">{{day | date: 'dd/MM EEE'}}</th>
+        <th class="right-arrow">
+          <a ng-click="$ctrl.nextWeek()"><i class="fa fa-arrow-right"></i></a>
+        </th>
+      </tr>
+    </thead>
+    <tbody class="timesheets-table-content">
+      <tr ng-repeat="project in $ctrl.user.Projects" id="{{project.Id}}">
+        <td class="project-table-container" colspan="10">
+          <table class="project-table">
+            <thead>
+              <tr class="project-table-header">
+                <th colspan="10">
+                  <a ui-sref="app.project({ projectId: project.Id })">{{project.Name}}</a>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="task in project.Tickets" ng-if="task.">
+                <td class="task-name">
+                  <a ui-sref="app.task({ taskId: task.Id })">{{task.Name}}</a>
+                </td>
+                <td ng-repeat="day in $ctrl.calendar" class="timesheets-cell">
+                  <input type="text" id="{{task.Name}}_{{day | date: 'yyyy-M-d'}}" class="form-control timesheets-input">
+                  <i class="fa fa-plus"></i>
+                </td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Total</td>
+                <td ng-repeat="day in $ctrl.calendar" class="total-cell" id="{{project.Name}}_{{day | date: 'yyyy-M-d'}}">{{project.total}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+    <!--<tfoot>-->
+      <!--<tr>-->
+        <!--<td colspan="10">Total</td>-->
+      <!--</tr>-->
+    <!--</tfoot>-->
+  </table>
+</div>

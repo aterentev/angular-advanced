@@ -1,0 +1,93 @@
+<div class="container profile">
+  <h3>{{$ctrl.user.FullName}}</h3>
+  <div class="row">
+    <div class="col-md-2 col-md-offset-1 user-photo">
+      <img src="/assets/images/employee.png">
+    </div>
+    <div class="col-md-4 user-info-card">
+      <div>
+        <span>Birthday:</span>
+        {{$ctrl.user.Birthday | date: "longDate"}}
+      </div>
+      <div>
+        <span>Email:</span>
+        {{$ctrl.user.Email}}
+      </div>
+      <div>
+        <span>Location:</span>
+        {{$ctrl.user.Location.Name}}
+      </div>
+      <div>
+        <span>Address:</span>
+        {{$ctrl.user.Address}}
+      </div>
+      <div>
+        <span>Skype:</span>
+        {{$ctrl.user.Skype}}
+      </div>
+      <div>
+        <span>Phone:</span>
+        {{$ctrl.user.Phone}}
+      </div>
+    </div>
+    <div class="col-md-4 user-skills">
+      <!--<div class="row" ng-repeat="skill in $ctrl.user.skills">
+        <div class="col-md-6" ng-hide="skill.edited">
+          <b>{{skill.Name}}</b>
+        </div>
+        <div class="col-md-6" ng-if="skill.edited">
+          <input type="text" ng-model="skill.Name">
+        </div>
+        <div class="col-md-3" ng-hide="skill.edited">{{skill.LevelName}}</div>
+        <div class="col-md-3" ng-if="skill.edited">
+          <select ng-options="levelName for levelName in $ctrl.levelNames" ng-model="skill.LevelName"></select>
+        </div>
+        <div class="col-md-3">
+          <button ng-hide="skill.edited" class="btn btn-default btn-sm" ng-click="$ctrl.edit(skill)">Edit</button>
+          <button ng-if="skill.edited" class="btn btn-default btn-sm" ng-click="$ctrl.save(skill)">Save</button>
+        </div>
+      </div>-->
+      <table class="table table-bordered table-condensed table-responsive">
+        <tr ng-repeat="userSkill in $ctrl.user.skills">
+          <td class="skill-name" ng-hide="userSkill.edited">
+            <b>{{userSkill.Name}}</b>
+          </td>
+          <td class="skill-name" ng-if="userSkill.edited">
+            <!--<input type="text" ng-model="skill.Name">-->
+            <select ng-model="userSkill.selectedSkill" ng-options="skill.Name for skill in $ctrl.skills track by skill.Id"></select>
+            <!--<select ng-model="$ctrl.user.selectedSkill" ng-options="skill.Name for skill in $ctrl.skills track by skill.Id"></select>-->
+          </td>
+          <td ng-hide="userSkill.edited">{{userSkill.LevelName}}</td>
+          <td ng-if="userSkill.edited">
+            <select ng-model="userSkill.selectedLevel" ng-options="level.LevelName for level in $ctrl.levels track by level.LevelId"></select>
+            <!--<select ng-model="$ctrl.user.selectedLevel" ng-options="level.LevelName for level in $ctrl.levels track by level.LevelId"></select>-->
+          </td>
+          <td>
+            <button ng-hide="userSkill.edited" class="btn btn-default btn-xs center-block" ng-click="$ctrl.edit(userSkill)">Edit</button>
+            <button ng-if="userSkill.edited" class="btn btn-default btn-xs pull-left" ng-click="$ctrl.save(userSkill)">Save</button>
+            <button ng-if="userSkill.edited" class="btn btn-default btn-xs pull-right" ng-click="$ctrl.deleteSkill(userSkill)">Delete</button>
+          </td>
+        </tr>
+      </table>
+      <div class="add-skill">
+        <button class="btn btn-primary" ng-click="$ctrl.addSkill()" draggable="true">Add skill</button>
+      </div>
+    </div>
+  </div>
+  <div class="projects-table">
+    <h3>Projects</h3>
+    <ul class="projects-list">
+      <li class="project" ng-repeat="project in $ctrl.user.Projects">
+        <div class="project-name">
+          <a ui-sref="app.project({ projectId: project.Id })">{{project.Name}}</a>
+        </div>
+        <div class="row ticket" ng-repeat="task in project.Tickets">
+          <div class="col-md-3 ticket-name">
+            <a ui-sref="app.task({ taskId: task.Id })">{{task.Name}}</a>
+          </div>
+          <div class="col-md-9 ticket-text">{{task.Description}}</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>

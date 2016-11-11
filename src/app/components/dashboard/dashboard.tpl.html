@@ -1,0 +1,27 @@
+<div class="container dashboard">
+  <div class="dashboard-header">
+    <h3>{{$ctrl.project.Name}}</h3>
+  </div>
+  <div class="dashboard-body clearfix">
+    <table class="table table-responsive">
+      <thead>
+        <tr class="table-header">
+          <th>Open</th>
+          <th>Development</th>
+          <th>Ready for QA</th>
+          <th>Test</th>
+          <th>Closed</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr id="{{task.Id}}" ng-repeat="task in $ctrl.tasks">
+          <td class="column Open"></td>
+          <td class="column Development"></td>
+          <td class="column Ready_for_QA"></td>
+          <td class="column Test"></td>
+          <td class="column Closed"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

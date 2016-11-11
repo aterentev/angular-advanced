@@ -1,0 +1,22 @@
+.task > h3 {
+  margin: 0 auto 15px auto;
+  text-align: center;
+}
+
+.task-info-card div {
+  margin-bottom: 5px;
+  font-size: 16px;
+}
+
+.task-info-card span {
+  font-weight: 600;
+}
+
+.edit-task-buttons {
+  margin-top: 10px;
+}
+
+.edit-task-buttons .btn {
+  margin-left: 4px;
+  border-radius: 4px;
+}

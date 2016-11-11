@@ -1,0 +1,38 @@
+<div class="container projects">
+  <div class="row">
+    <div class="col-md-10 col-md-offset-1">
+      <div class="projects-search clearfix">
+        <div class="col-md-5">
+          <div class="form-group has-feedback">
+            <input class="form-control" type="text" placeholder="Filter" ng-model="$ctrl.filter">
+            <i class="fa fa-search form-control-feedback"></i>
+          </div>
+        </div>
+        <button class="btn btn-primary btn-sm add-project" ng-click="$ctrl.addProject()">Add project</button>
+      </div>
+      <div class="row header">
+        <div class="col-md-2 text-primary">Name</div>
+        <div class="col-md-2 text-primary">Customer</div>
+        <div class="col-md-3 text-primary">Start date</div>
+        <div class="col-md-4 text-primary">Description</div>
+        <div class="col-md-1"></div>
+      </div>
+      <div class="projects-table row" ng-repeat="project in $ctrl.projects">
+        <div class="col-md-2">
+          <a ui-sref="app.project({ projectId: project.Id })">{{project.Name}}</a>
+        </div>
+        <div class="col-md-2">{{project.CustomerName}}</div>
+        <div class="col-md-3">{{project.StartDate | date: "longDate"}}</div>
+        <div class="col-md-4">{{project.Description}}</div>
+        <div class="col-md-1 project-icons">
+          <a ui-sref="app.project({ projectId: project.Id })">
+            <i class="fa fa-pencil"></i>
+          </a>
+          <a ng-click="$ctrl.deleteProject(project)">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

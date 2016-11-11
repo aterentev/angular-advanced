@@ -1,0 +1,39 @@
+.dashboard {
+  margin: auto;
+}
+
+.dashboard .ticket {
+  margin: auto;
+  text-align: center;
+  cursor: move;
+}
+
+.dashboard .dashboard-body {
+  margin: 0 120px;
+}
+
+.dashboard .dashboard-header {
+  text-align: center;
+}
+
+.table .table-header th {
+  border: none;
+  text-align: center;
+}
+
+.table .column {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  margin: 20px 15px;
+  border: none;
+}
+
+.column .ticket {
+  border: 1px solid #000;
+  border-radius: 2px;
+}
+
+.column.over {
+  border: 1px dashed #2e2e2e;
+}

@@ -1,0 +1,38 @@
+<div class="container employees">
+  <div class="row">
+    <div class="col-md-10 col-md-offset-1">
+      <div class="employee-search clearfix">
+        <div class="col-md-5">
+          <div class="form-group has-feedback">
+            <input class="form-control" type="text" placeholder="Filter" ng-model="$ctrl.filter">
+            <i class="fa fa-search form-control-feedback"></i>
+          </div>
+        </div>
+        <button class="btn btn-primary btn-sm add-employee">Add employee</button>
+      </div>
+      <div class="row header">
+        <div class="col-md-3 text-primary">Name</div>
+        <div class="col-md-4 text-primary">Email</div>
+        <div class="col-md-2 text-primary">Skype</div>
+        <div class="col-md-2 text-primary">Phone</div>
+        <div class="col-md-1"></div>
+      </div>
+      <div class="employees-table row" ng-repeat="employee in $ctrl.employees">
+        <div class="col-md-3">
+          <a ui-sref="app.profile({ userId: employee.Id })">{{employee.FullName}}</a>
+        </div>
+        <div class="col-md-4">{{employee.Email}}</div>
+        <div class="col-md-2">{{employee.Skype}}</div>
+        <div class="col-md-2">{{employee.Phone}}</div>
+        <div class="col-md-1 employee-icons">
+          <a ui-sref="app.profile({ userId: employee.Id })">
+            <i class="fa fa-pencil"></i>
+          </a>
+          <a ng-click="$ctrl.deleteEmployee(employee)">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

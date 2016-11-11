@@ -1,0 +1,50 @@
+<div class="container task">
+  <h3>Task {{$ctrl.task.Name}}</h3>
+  <div class="row">
+    <div class="col-md-3 col-md-offset-3 task-info-card">
+      <div>
+        <span>Project:</span>
+        {{$ctrl.task.Project.Name}}
+      </div>
+      <div>
+        <span>Status:</span>
+        {{$ctrl.task.Status.Name}}
+      </div>
+      <div>
+        <span>Type:</span>
+        {{$ctrl.task.TicketType.Name}}
+      </div>
+      <div>
+        <span>Estimate:</span>
+        {{$ctrl.task.Estimate}}
+      </div>
+      <div>
+        <span>Start date:</span>
+        {{$ctrl.task.StartDate | date: "longDate"}}
+      </div>
+      <div>
+        <span>End date:</span>
+        {{$ctrl.task.EndDate | date: "longDate"}}
+      </div>
+      <div>
+        <span>Description:</span>
+        {{$ctrl.task.Description}}
+      </div>
+      <div class="edit-task-buttons">
+        <button class="btn btn-primary">New</button>
+        <button class="btn btn-success">Edit</button>
+        <button class="btn btn-danger">Delete</button>
+      </div>
+    </div>
+    <div class="col-md-3 task-info-card">
+      <div>
+        <span>Reporter:</span>
+        {{$ctrl.task.Reporter.FullName}}
+      </div>
+      <div>
+        <span>Responsible:</span>
+        {{$ctrl.task.Responsible.FullName}}
+      </div>
+    </div>
+  </div>
+</div>

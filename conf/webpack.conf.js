@@ -55,7 +55,7 @@ module.exports = {
         loader: "url?limit=10000"
       },
       {
-        test: /\.(ttf|eot|svg)(\?[\s\S]+)?$/,
+        test: /\.(ttf|eot|svg|png)(\?[\s\S]+)?$/,
         loader: 'file'
       }
     ]
@@ -66,7 +66,12 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: conf.path.src('index.html'),
       inject: true
-    })
+    }),
+    new webpack.ProvidePlugin({
+      $: "jquery",
+      jQuery: "jquery",
+      "window.jQuery": "jquery"
+    }),
   ],
   postcss: () => [autoprefixer],
   debug: true,
