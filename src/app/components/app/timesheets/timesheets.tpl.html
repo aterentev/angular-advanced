@@ -24,7 +24,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr ng-repeat="task in project.Tickets" ng-if="task.">
+              <tr ng-repeat="task in project.Tickets" ng-if="task.Status.Name != 'Closed'">
                 <td class="task-name">
                   <a ui-sref="app.task({ taskId: task.Id })">{{task.Name}}</a>
                 </td>

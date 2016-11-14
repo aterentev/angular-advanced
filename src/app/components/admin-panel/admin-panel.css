@@ -1,0 +1,6 @@
+.admin-panel .employees,
+.admin-panel .projects {
+  height: 250px;
+  border: 1px solid #000000;
+  text-align: center;
+}

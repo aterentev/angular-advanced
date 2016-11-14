@@ -1,7 +1,7 @@
 <div class="container login">
   <form class="form-signin" name="login-form" novalidate>
     <h2 class="form-signin-heading">Please sign in</h2>
-    <input type="text" name="username" class="input-block-level" placeholder="Username" ng-model="$ctrl.login"
+    <input type="text" name="username" class="input-block-level" placeholder="Username" ng-model="$ctrl.loginName"
            uib-popover="{{$ctrl.message}}"  popover-is-open="$ctrl.popoverOpen" popover-trigger="none" popover-placement="top">
     <input type="password" name="password" class="input-block-level" placeholder="Password" ng-model="$ctrl.password">
     <button class="btn btn-large btn-primary" type="submit" ng-click="$ctrl.enter()">Войти</button>

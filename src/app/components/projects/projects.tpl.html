@@ -17,7 +17,7 @@
         <div class="col-md-4 text-primary">Description</div>
         <div class="col-md-1"></div>
       </div>
-      <div class="projects-table row" ng-repeat="project in $ctrl.projects">
+      <div class="projects-table row" ng-repeat="project in $ctrl.projects.data | filter: $ctrl.filter">
         <div class="col-md-2">
           <a ui-sref="app.project({ projectId: project.Id })">{{project.Name}}</a>
         </div>

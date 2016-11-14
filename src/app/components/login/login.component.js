@@ -3,39 +3,47 @@ import styles from './login.css'
 
 class Controller {
   /** @ngInject */
-  constructor($location, localStorageService, utils) {
+  constructor($location, localStorageService) {
     var vm = this;
 
     vm.styles = styles;
 
-    vm.enter = enter;
+    vm.location = $location;
+    vm.localStorageService = localStorageService;
+  }
+
+  $onInit() {
+    var vm = this;
+
     vm.message = '';
     vm.popoverNameOpen = false;
     vm.popoverPassOpen = false;
+  }
 
-    function enter($event) {
-      utils.authorize(vm.login, vm.password)
-        .then(function(res) {
-          vm.user = res.data;
+  enter() {
+    var vm = this;
 
-          utils.user = vm.user;
-          localStorageService.set('id', res.data.Id);
-          localStorageService.set('role', 'admin');
-          $location.path('/');
-        }, function(res) {
-          console.log('error ', res);
+    vm.utils.authorize(vm.loginName, vm.password)
+      .then(function(res) {
+        vm.user = res.data;
 
-          if (res.status == 401) {
-            vm.popoverOpen = true;
-            vm.message = res.data.Message;
-            vm.password = '';
-          }
+        vm.utils.user = vm.user;
+        vm.localStorageService.set('id', res.data.Id);
+        vm.localStorageService.set('role', 'admin');
+        vm.$location.path('/');
+      }, function(res) {
+        console.log('error ', res);
 
-          $location.path('/login');
-        });
+        if (res.status == 401) {
+          vm.popoverOpen = true;
+          vm.message = res.data.Message;
+          vm.password = '';
+        }
+
+        vm.location.path('/login');
+      });
     }
   }
-}
 
 export default {
   template,

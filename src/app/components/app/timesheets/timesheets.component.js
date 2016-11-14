@@ -4,12 +4,11 @@ import angular from 'angular'
 
 class Controller {
   /** @ngInject */
-  constructor($q, $location, $document, utils, tableConstruct) {
+  constructor($document) {
     var vm = this,
       date = new Date(2016, 8, 12);
 
-    // console.log('timesheets ', vm.user);
-    vm.$document = $document;
+    vm.document = $document;
 
     vm.calendar = [];
     vm.timesheets = [];
@@ -19,12 +18,8 @@ class Controller {
     vm.prevWeek = prevWeek;
 
     createCalendar(date);
-    // vm.$document.ready(function() {
-      /*tableConstruct.fillTimesheets(vm.user, vm.calendar);
-      tableConstruct.countTotal('.total-cell');*/
       vm.fillTimesheets(vm.user, vm.calendar);
       vm.countTotal('.total-cell');
-    // });
 
     function createCalendar(date) {
       for (var i = 0; i < 7; i++) {
@@ -61,7 +56,7 @@ class Controller {
   fillTimesheets(user) {
     var vm = this;
 
-    vm.$document.ready(function() {
+    vm.document.ready(function() {
       user.Projects.forEach(function (project) {
         project.Tickets.forEach(function (ticket) {
           ticket.TimeSheets.forEach(function (timesheet) {
@@ -79,7 +74,7 @@ class Controller {
   countTotal(selector) {
     var vm = this;
 
-    vm.$document.ready(function() {
+    vm.document.ready(function() {
       $(selector).each(function () {
         var total = 0,
           column = $(this).siblings(selector).addBack().index(this);

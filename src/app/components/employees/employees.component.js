@@ -7,7 +7,6 @@ class Controller {
     var vm = this;
 
     vm.utils = utils;
-    // console.log('employees ', vm.employees);
   }
   $onInit() {
     var vm = this;

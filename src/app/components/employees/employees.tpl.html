@@ -17,7 +17,7 @@
         <div class="col-md-2 text-primary">Phone</div>
         <div class="col-md-1"></div>
       </div>
-      <div class="employees-table row" ng-repeat="employee in $ctrl.employees">
+      <div class="employees-table row" ng-repeat="employee in $ctrl.employees | filter: $ctrl.filter">
         <div class="col-md-3">
           <a ui-sref="app.profile({ userId: employee.Id })">{{employee.FullName}}</a>
         </div>

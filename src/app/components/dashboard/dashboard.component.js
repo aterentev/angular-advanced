@@ -4,72 +4,55 @@ import angular from 'angular'
 
 class Controller {
   /** @ngInject */
-  constructor($scope, $compile, $document, utils, DnD, tableConstruct) {
+  constructor($scope, $compile, $document, DnD, tableConstruct) {
     var vm = this;
 
-    // vm.scope = $scope;
+    vm.scope = $scope;
     vm.DnD = DnD;
     vm.tableConstruct = tableConstruct;
+    vm.compile = $compile;
+    vm.document = $document;
+
     vm.tasks = vm.tasks.data;
 
     vm.tasks.forEach(function(task) {
       vm['task' + task.Id] = task;
       vm['task' + task.Id].moved = false;
-      /*console.log('q ', task);
-      vm.task = task;
-      vm.tableConstruct.dashboardCreate(task, $scope);
-      vm.DnD.init();*/
     });
 
-    vm.dashboardCreate($scope, $compile, $document);
+    vm.dashboardCreate();
     vm.init($document, vm);
-    // console.log(vm);
-    // vm.DnD.init();
   }
 
-  $onInit($compile, $document) {
+  $onInit() {
     var vm = this;
 
     vm.styles = styles;
-    // vm.tasks = vm.tasks.data;
-
-    // vm.DnD.init();
-
-    // vm.tasks.forEach(function(task) {
-    //   vm.tableConstruct.dashboardCreate(task, vm.scope);
-    // });
   }
 
-  dashboardCreate($scope, $compile, $document) {
+  dashboardCreate() {
     var vm = this;
 
     vm.tasks.forEach(function(task) {
       var html = "<ticket tickets='$ctrl.tasks' ticket='$ctrl.task" + task.Id + "'></ticket>",
         template = angular.element(html),
-        linkFn = $compile(template),
-        element = linkFn($scope);
+        linkFn = vm.compile(template),
+        element = linkFn(vm.scope);
 
-      $document.ready(function () {
+      vm.document.ready(function () {
         $('#' + task.Id + ' .column').each(function() {
-          // console.log(this);
-          // // $(this).html(element);
-          // this.innerHTML = $(element).html();
-          //
-          /*var ticket = $(this).find('.ticket')[0];
-
-          $(ticket).addClass('hidden');*/
           if ($(this).hasClass(task.Status.Name)) {
             $(this).html(element);
-            // this.innerHTML = $(element).html();
-            // $(ticket).removeClass('hidden');
           }
         })
       });
     })
   }
 
-  init($document, vm) {
-    $document.ready(function() {
+  init() {
+    var vm = this;
+
+    vm.document.ready(function() {
       vm.cols = document.getElementsByClassName("column");
       vm.tickets = document.getElementsByClassName("ticket");
 
@@ -79,9 +62,6 @@ class Controller {
 
       function addListeners() {
         angular.forEach(vm.cols, function (col) {
-          // col.addEventListener('dragenter', function() {
-          //   vm.handleDragEnter(col);
-          // }, false);
           col.addEventListener('dragenter', handleDragEnter, false);
           col.addEventListener('dragover', handleDragOver, false);
           col.addEventListener('dragleave', handleDragLeave, false);
@@ -126,9 +106,6 @@ class Controller {
         }
 
         if (vm.dragSrcEl != $(this).find('.ticket')[0] && vm.rowId == $(this).closest('tr').attr('id')) {
-          /*dragSrcEl.innerHTML = this.innerHTML;
-           this.innerHTML = e.dataTransfer.getData('text/html');*/
-          // dragSrcEl.outerHTML = this.innerHTML;
           $(vm.dragSrcEl).replaceWith($(this).html());
           this.innerHTML = e.dataTransfer.getData('text/html');
         }
@@ -142,9 +119,6 @@ class Controller {
         angular.forEach(vm.cols, function (col) {
           col.classList.remove('over');
         });
-
-        // vm['task' + vm.rowId].moved = false;
-        // console.log('end ', vm['task' + vm.rowId]);
       }
     });
   }
@@ -152,7 +126,6 @@ class Controller {
 
 export default {
   template,
-  // transclude: true,
   controller: Controller,
   bindings: {
     project: '<',

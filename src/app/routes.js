@@ -90,6 +90,9 @@ function routesConfig($stateProvider, $urlRouterProvider, $locationProvider) {
       resolve: {
         task: function($transition$, utils) {
           return utils.getById('GET', 'tasks/', $transition$.params().taskId);
+        },
+        employees: function(utils) {
+          return utils.serverReq('GET', 'employees');
         }
       }
     });

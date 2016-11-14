@@ -4,46 +4,84 @@
     <div class="col-md-3 col-md-offset-3 task-info-card">
       <div>
         <span>Project:</span>
-        {{$ctrl.task.Project.Name}}
+        <p>
+          <a ui-sref="app.project({ projectId: $ctrl.task.ProjectId })">{{$ctrl.task.Project.Name}}</a>
+        </p>
+        <!--<p ng-if="$ctrl.edited">
+          <input type="text" ng-model="$ctrl.editedInfo.ProjectName">
+        </p>-->
       </div>
       <div>
         <span>Status:</span>
-        {{$ctrl.task.Status.Name}}
+        <p ng-hide="$ctrl.edited">{{$ctrl.task.Status.Name}}</p>
+        <p ng-if="$ctrl.edited">
+          <select ng-model="$ctrl.selectedStatus" ng-options="status.Name for status in $ctrl.statuses track by status.Id"></select>
+        </p>
       </div>
       <div>
         <span>Type:</span>
-        {{$ctrl.task.TicketType.Name}}
+        <p ng-hide="$ctrl.edited">{{$ctrl.task.TicketType.Name}}</p>
+        <p ng-if="$ctrl.edited">
+          <select ng-model="$ctrl.selectedType" ng-options="type.Name for type in $ctrl.types track by type.Id"></select>
+        </p>
       </div>
       <div>
         <span>Estimate:</span>
-        {{$ctrl.task.Estimate}}
+        <p ng-hide="$ctrl.edited">{{$ctrl.task.Estimate}}</p>
+        <p ng-if="$ctrl.edited">
+          <input type="text" ng-model="$ctrl.editedInfo.Estimate">
+        </p>
       </div>
       <div>
         <span>Start date:</span>
-        {{$ctrl.task.StartDate | date: "longDate"}}
+        <p ng-hide="$ctrl.edited">{{$ctrl.task.StartDate | date: "longDate"}}</p>
+        <p class="input-group input-group-sm" ng-if="$ctrl.edited">
+          <input type="text" class="form-control" uib-datepicker-popup="dd-MMMM-yyyy" ng-model="$ctrl.editedInfo.StartDate" is-open="$ctrl.popup1"
+                 ng-focus="$ctrl.popup1 = true">
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="$ctrl.popup1 = true"><i class="fa fa-calendar"></i></button>
+          </span>
+        </p>
       </div>
       <div>
         <span>End date:</span>
-        {{$ctrl.task.EndDate | date: "longDate"}}
+        <p ng-hide="$ctrl.edited">{{$ctrl.task.EndDate | date: "longDate"}}</p>
+        <p class="input-group input-group-sm" ng-if="$ctrl.edited">
+          <input type="text" class="form-control" uib-datepicker-popup="dd-MMMM-yyyy" ng-model="$ctrl.editedInfo.EndDate" is-open="$ctrl.popup2"
+                 ng-focus="$ctrl.popup2 = true">
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="$ctrl.popup2 = true"><i class="fa fa-calendar"></i></button>
+          </span>
+        </p>
       </div>
       <div>
         <span>Description:</span>
-        {{$ctrl.task.Description}}
+        <p ng-hide="$ctrl.edited">{{$ctrl.task.Description}}</p>
+        <p ng-if="$ctrl.edited">
+          <textarea ng-model="$ctrl.editedInfo.Description"></textarea>
+        </p>
       </div>
       <div class="edit-task-buttons">
-        <button class="btn btn-primary">New</button>
-        <button class="btn btn-success">Edit</button>
-        <button class="btn btn-danger">Delete</button>
+        <button class="btn btn-primary" ng-click="$ctrl.edit()" ng-hide="$ctrl.edited">Edit</button>
+        <button class="btn btn-success" ng-click="$ctrl.save()" ng-if="$ctrl.edited">Save</button>
+        <button class="btn btn-warning" ng-click="$ctrl.cancel()" ng-if="$ctrl.edited">Cancel</button>
+        <button class="btn btn-danger" ng-click="$ctrl.deleteTask()">Delete</button>
       </div>
     </div>
     <div class="col-md-3 task-info-card">
       <div>
         <span>Reporter:</span>
-        {{$ctrl.task.Reporter.FullName}}
+        <p ng-hide="$ctrl.edited">{{$ctrl.task.Reporter.FullName}}</p>
+        <p ng-if="$ctrl.edited">
+          <select ng-model="$ctrl.selectedReporter" ng-options="reporter.FullName for reporter in $ctrl.employees.data track by reporter.Id"></select>
+        </p>
       </div>
       <div>
         <span>Responsible:</span>
-        {{$ctrl.task.Responsible.FullName}}
+        <p ng-hide="$ctrl.edited">{{$ctrl.task.Responsible.FullName}}</p>
+        <p ng-if="$ctrl.edited">
+          <select ng-model="$ctrl.selectedResponsible" ng-options="responsible.FullName for responsible in $ctrl.employees.data track by responsible.Id"></select>
+        </p>
       </div>
     </div>
   </div>

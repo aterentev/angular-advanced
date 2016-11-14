@@ -7,61 +7,32 @@ class Controller {
     var vm = this;
 
     vm.utils = utils;
-    // console.log('project ', vm.team, vm.project);
-
-    // vm.styles = styles;
-    // vm.employees = vm.employees.data;
-
-    // vm.addEmployee = addEmployee;
-    // vm.deleteEmployee = deleteEmployee;
-    // vm.onSelect = onSelect;
-
-    /*function addEmployee() {
-      vm.editSelect = true;
-    }*/
-
-    /*function deleteEmployee(employee) {
-      var index = vm.team.indexOf(employee);
-
-      utils.deleteData('team', 'projectId=' + vm.project.Id + '&employeeId=' + employee.Id)
-        .then(function(res) {
-          vm.team.splice(index, 1);
-        }, function(res) {
-          console.log('deleteEmployee error ', res);
-        })
-    }*/
-
-    /*function onSelect($item, $model, $label) {
-      console.log('onSelect ', $item);
-
-      utils.serverReq('POST', 'team', {
-        ProjectId: vm.project.Id,
-        EmployeeId: $item.Id
-      })
-        .then(function(res) {
-          vm.team.push(res.data);
-          vm.selected = "";
-          vm.editSelect = false;
-          console.log('onSelect success ', res);
-        }, function(res) {
-          console.log('onSelect error ', res);
-        });
-    }*/
   }
 
   $onInit() {
     var vm = this;
 
     vm.styles = styles;
-    vm.employees = vm.employees.data;
     vm.StartDate = new Date(vm.project.StartDate);
     vm.EndDate = new Date(vm.project.EndDate);
+
+    if (!vm.project.Id) {
+      vm.isNewProject = true;
+    } else {
+      vm.isNewProject = false;
+    }
   }
 
   addEmployee() {
     var vm = this;
 
     vm.editSelect = true;
+  }
+
+  cancelEdit() {
+    var vm = this;
+
+    vm.infoEdited = false;
   }
 
   deleteEmployee(employee) {
@@ -85,12 +56,60 @@ class Controller {
     })
       .then(function(res) {
         vm.team.push(res.data);
-        // vm.selected = "";
-        // vm.editSelect = false;
         console.log('onSelect success ', res);
       }, function(res) {
         console.log('onSelect error ', res);
       });
+  }
+
+  saveEdit() {
+    var vm = this;
+
+    var data = {
+      Name: vm.project.Name,
+      Description: vm.editedInfo.description,
+      CustomerName: vm.editedInfo.customer,
+      ImageUrl: vm.project.ImageUrl,
+      StartDate: vm.editedInfo.startDate,
+      EndDate: vm.editedInfo.endDate,
+      Id: vm.project.Id
+    };
+
+    if (vm.isNewProject) {
+      data.Id = Math.floor((Math.random()*6)+1);
+    }
+
+    vm.utils.serverReq('PUT', 'projects', data)
+      .then(function(res) {
+        console.log(res);
+        vm.project.Name = res.data.Name;
+        vm.project.Description = res.data.Description;
+        vm.project.CustomerName = res.data.CustomerName;
+        vm.project.ImageUrl = res.data.ImageUrl;
+        vm.project.StartDate = res.data.StartDate;
+        vm.project.EndDate = res.data.EndDate;
+        vm.Id = res.data.Id;
+
+        vm.$onInit();
+      }, function(rej) {
+        console.log(rej);
+      });
+
+
+    vm.infoEdited = false;
+  }
+
+  startEdit() {
+    var vm = this;
+
+    vm.editedInfo = {
+      customer: vm.project.CustomerName,
+      startDate: vm.StartDate,
+      endDate: vm.EndDate,
+      description: vm.project.Description
+    };
+
+    vm.infoEdited = true;
   }
 }
 

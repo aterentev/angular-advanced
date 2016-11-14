@@ -70,7 +70,6 @@ class Controller {
 
     function edit(skill) {
       skill.edited = true;
-      // console.log(skill);
       skill.selectedSkill = {
         Name: skill.Name,
         Id: skill.Id
@@ -84,7 +83,6 @@ class Controller {
     function save(skill) {
       var index = vm.user.skills.indexOf(skill);
 
-      // console.log('save ', index);
       if (!(skill.selectedSkill || skill.selectedLevel)) {
         return
       }
@@ -92,23 +90,19 @@ class Controller {
       skill.edited = false;
 
       if (!skill.Id) {
-        // console.log('save post ', skill);
         utils.serverReq('POST', 'skills', {
           SkillId: skill.selectedSkill.Id,
           LevelId: skill.selectedLevel.LevelId,
           EmployeeId: vm.user.Id
         }).then(function (res) {
-          // console.log('post ', index, res.data);
           vm.user.skills[index] = res.data;
         })
       } else {
-        // console.log('save put ', skill);
         utils.serverReq('PUT', 'skills', {
           SkillId: skill.selectedSkill.Id,
           LevelId: skill.selectedLevel.LevelId,
           EmployeeId: vm.user.Id
         }).then(function (res) {
-          // console.log('put ', index, res.data);
           vm.user.skills[index] = res.data; // при первом запросе "LevelName" возвращается с сервера со значением "null"
         })
       }

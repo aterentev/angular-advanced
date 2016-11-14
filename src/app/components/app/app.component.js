@@ -8,11 +8,7 @@ class Controller {
 
       vm.styles = styles;
 
-      // console.log('app ', vm.user);
-
       utils.checkAuth(vm.user);
-
-
     }
 }
 

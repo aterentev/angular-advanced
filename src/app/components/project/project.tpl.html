@@ -9,17 +9,17 @@
       <div>
         <span>Customer:</span>
         <p ng-hide="$ctrl.infoEdited">{{$ctrl.project.CustomerName}}</p>
-        <p><input type="text" ng-model="$ctrl.project.CustomerName" ng-if="$ctrl.infoEdited" ng-blur="$ctrl.infoEdited = false"></p>
+        <p ng-if="$ctrl.infoEdited">
+          <input type="text" ng-model="$ctrl.editedInfo.customer">
+        </p>
       </div>
       <div>
         <span>Start date:</span>
         <p ng-hide="$ctrl.infoEdited">{{$ctrl.project.StartDate | date: "longDate"}}</p>
-        <!--<input type="text" uib-datepicker-popup="dd-MMMM-yyyy" is-open="$ctrl.popup1.opened"-->
-               <!--ng-model="$ctrl.project.StartDate" ng-if="$ctrl.infoEdited" ng-blur="$ctrl.infoEdited = false" ng-focus="$ctrl.popup1.opened = true">-->
-        <p class="input-group input-group-sm">
-          <input type="text" class="form-control" uib-datepicker-popup="dd-MMMM-yyyy" ng-model="$ctrl.StartDate" is-open="$ctrl.popup1"
-                 ng-if="$ctrl.infoEdited" ng-focus="$ctrl.popup1 = true">
-          <span class="input-group-btn" ng-if="$ctrl.infoEdited">
+        <p class="input-group input-group-sm" ng-if="$ctrl.infoEdited">
+          <input type="text" class="form-control" uib-datepicker-popup="dd-MMMM-yyyy" ng-model="$ctrl.editedInfo.startDate" is-open="$ctrl.popup1"
+                 ng-focus="$ctrl.popup1 = true">
+          <span class="input-group-btn">
             <button type="button" class="btn btn-default" ng-click="$ctrl.popup1 = true"><i class="fa fa-calendar"></i></button>
           </span>
         </p>
@@ -27,10 +27,10 @@
       <div>
         <span>End date:</span>
         <p ng-hide="$ctrl.infoEdited">{{$ctrl.project.EndDate | date: "longDate"}}</p>
-        <p class="input-group input-group-sm">
-          <input type="text" class="form-control" uib-datepicker-popup="dd-MMMM-yyyy" ng-model="$ctrl.EndDate" is-open="$ctrl.popup2"
-                 ng-if="$ctrl.infoEdited" ng-focus="$ctrl.popup2 = true">
-          <span class="input-group-btn" ng-if="$ctrl.infoEdited">
+        <p class="input-group input-group-sm" ng-if="$ctrl.infoEdited">
+          <input type="text" class="form-control" uib-datepicker-popup="dd-MMMM-yyyy" ng-model="$ctrl.editedInfo.endDate" is-open="$ctrl.popup2"
+                 ng-focus="$ctrl.popup2 = true">
+          <span class="input-group-btn">
             <button type="button" class="btn btn-default" ng-click="$ctrl.popup2 = true"><i class="fa fa-calendar"></i></button>
           </span>
         </p>
@@ -38,10 +38,14 @@
       <div>
         <span>Description:</span>
         <p ng-hide="$ctrl.infoEdited">{{$ctrl.project.Description}}</p>
-        <p><textarea ng-model="$ctrl.project.Description" ng-if="$ctrl.infoEdited" ></textarea></p>
+        <p ng-if="$ctrl.infoEdited">
+          <textarea ng-model="$ctrl.editedInfo.description"></textarea>
+        </p>
       </div>
       <a class="btn btn-primary" ui-sref="app.dashboard({ projectId: $ctrl.project.Id })">Dashboard</a>
-      <button class="btn btn-primary" ng-click="$ctrl.infoEdited = true">Edit</button>
+      <button class="btn btn-primary" ng-click="$ctrl.startEdit()" ng-hide="$ctrl.infoEdited">Edit</button>
+      <button class="btn btn-danger" ng-click="$ctrl.cancelEdit()" ng-if="$ctrl.infoEdited">Cancel</button>
+      <button class="btn btn-success" ng-click="$ctrl.saveEdit()" ng-if="$ctrl.infoEdited">Save</button>
     </div>
   </div>
   <div class="project-team">
@@ -49,7 +53,7 @@
       Team
       <button ng-hide="$ctrl.editSelect" class="btn btn-primary add-to-team" ng-click="$ctrl.addEmployee()">Add to team</button>
       <input ng-if="$ctrl.editSelect" placeholder="select employee" type="text" ng-model="$ctrl.selected" typeahead-on-select="$ctrl.onSelect($item, $model, $label)"
-             class="typeahead" uib-typeahead="(employee.FullName + ', ' + employee.Position.Name) for employee in $ctrl.employees | filter:{FullName:$viewValue}"
+             class="typeahead" uib-typeahead="(employee.FullName + ', ' + employee.Position.Name) for employee in $ctrl.employees.data | filter:{FullName:$viewValue}"
              autofocus>
     </h3>
     <div class="row header">
