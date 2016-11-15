@@ -21,7 +21,7 @@ class Controller {
     });
 
     vm.dashboardCreate();
-    vm.init($document, vm);
+    vm.init();
   }
 
   $onInit() {
@@ -51,7 +51,6 @@ class Controller {
 
   init() {
     var vm = this;
-
     vm.document.ready(function() {
       vm.cols = document.getElementsByClassName("column");
       vm.tickets = document.getElementsByClassName("ticket");
@@ -77,6 +76,7 @@ class Controller {
         vm.dragSrcEl = this;
         vm.rowId = $(this).closest('tr').attr('id');
 
+        vm['task' + vm.rowId].moved = true;
         e.dataTransfer.effectAllowed = 'move';
         e.dataTransfer.setData('text/html', this.outerHTML);
       }
@@ -109,7 +109,7 @@ class Controller {
           $(vm.dragSrcEl).replaceWith($(this).html());
           this.innerHTML = e.dataTransfer.getData('text/html');
         }
-
+        
         addListeners();
 
         return false;
@@ -119,6 +119,7 @@ class Controller {
         angular.forEach(vm.cols, function (col) {
           col.classList.remove('over');
         });
+        vm['task' + vm.rowId].moved = false;
       }
     });
   }
@@ -126,6 +127,7 @@ class Controller {
 
 export default {
   template,
+  // transclude: true,
   controller: Controller,
   bindings: {
     project: '<',

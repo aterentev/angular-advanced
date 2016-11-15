@@ -8,10 +8,6 @@ class Controller {
     var vm = this;
 
     vm.DnD = DnD;
-
-    $scope.$watchCollection(function() { return vm.ticket }, function(newValue, oldValue) {
-      console.log('change ', vm.ticket);
-    });
   }
 
   $onInit() {
@@ -20,7 +16,9 @@ class Controller {
     vm.styles = styles;
   }
 
-
+  $onChanges(changesObj) {
+    console.log(changesObj.ticket);
+  }
 }
 
 export default {

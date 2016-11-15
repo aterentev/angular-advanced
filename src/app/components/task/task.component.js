@@ -6,7 +6,7 @@ class Controller {
   constructor($location, utils) {
     var vm = this;
 
-    console.log('task ', vm.task);
+    // console.log('task ', vm.task);
     vm.styles = styles;
     vm.utils = utils;
     vm.location = $location;

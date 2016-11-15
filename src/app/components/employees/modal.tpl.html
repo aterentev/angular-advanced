@@ -1,0 +1,30 @@
+<div class="modal-header">New Employee</div>
+<div class="modal-body">
+  <form>
+    <div class="form-group">
+      <label for="email1">Email address</label>
+      <input type="email" class="form-control" id="email1" placeholder="Email" ng-model="myModalCtrl.newUser.Email">
+    </div>
+    <div class="form-group">
+      <label for="password1">Password</label>
+      <input type="password" class="form-control" id="password1" placeholder="Password" ng-model="myModalCtrl.newUser.Password">
+    </div>
+    <div class="form-group">
+      <label for="firstname">First name</label>
+      <input type="text" class="form-control" id="firstname" placeholder="Firstname" ng-model="myModalCtrl.newUser.First">
+    </div>
+    <div class="form-group">
+      <label for="lastname">Last name</label>
+      <input type="text" class="form-control" id="lastname" placeholder="Lastname" ng-model="myModalCtrl.newUser.Last">
+    </div>
+    <div class="form-group">
+      <label for="phone">Phone</label>
+      <input type="text" class="form-control" id="phone" placeholder="Phone" ng-model="myModalCtrl.newUser.Phone">
+    </div>
+    <div class="form-group">
+      <label for="skype">Skype</label>
+      <input type="text" class="form-control" id="skype" placeholder="Skype" ng-model="myModalCtrl.newUser.Skype">
+    </div>
+    <button type="submit" class="btn btn-primary" ng-click="myModalCtrl.addEmployee()">Submit</button>
+  </form>
+</div>
